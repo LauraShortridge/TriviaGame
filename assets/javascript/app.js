@@ -7,7 +7,7 @@ let myQuestions = [
             c: "Laura",
             d: "Dial M for Murder"
         },
-        correctAnswer: "c"
+        correctAnswer: "Laura"
     },
     {
         question: "Which co-star of Humphrey Bogart’s did he marry in 1945?",
@@ -17,7 +17,7 @@ let myQuestions = [
             c: "Ingrid Bergman",
             d: "Lauren Bacall"
         },
-        correctAnswer: "d"
+        correctAnswer: "Lauren Bacall"
     },
     {
         question: "Who was Scarlett O’Hara’s second husband?",
@@ -27,7 +27,7 @@ let myQuestions = [
             c: "Ashley Wilkes",
             d: "Charles Hamilton"
         },
-        correctAnswer: "b"
+        correctAnswer: "Frank Kennedy"
     },
     {
         question: "On what national memorial did Cary Grant end up on in “North by Northwest”?",
@@ -37,7 +37,7 @@ let myQuestions = [
             c: "Grant’s Tomb",
             d: "Lincoln Memorial"
         },
-        correctAnswer: "b"
+        correctAnswer: "Mount Rushmore"
     },
     {
         question: "What actress did Fred Astaire dance through 10 films with?",
@@ -47,7 +47,7 @@ let myQuestions = [
             c: "Cyd Charisse",
             d: "Leslie Caron"
         },
-        correctAnswer: "a"
+        correctAnswer: "Ginger Rogers"
     },
     {
         question: "What was Cary Grant’s real name?",
@@ -57,7 +57,7 @@ let myQuestions = [
             c: "James Grant",
             d: "Archibald Leach"
         },
-        correctAnswer: "d"
+        correctAnswer: "Archibald Leach"
     },
     {
         question: "What was the last word uttered by Charles Foster Kane in “Citizen Kane”?",
@@ -67,7 +67,7 @@ let myQuestions = [
             c: "Puzzle",
             d: "Snowglobe "
         },
-        correctAnswer: "b"
+        correctAnswer: "Rosebud"
     },
     {
         question: "Who sang On the Good Ship Lollipop in “Bright Eyes”?",
@@ -77,11 +77,62 @@ let myQuestions = [
             c: "Judy Garland",
             d: "George McFarland"
         },
-        correctAnswer: "a"
+        correctAnswer: "Shirley Temple"
     }
 ]
 
 $(document).ready(function () {
+    let time = 120
+    let intervalID;
+
+    function setTimer() {
+
+        run();
+
+        function run() {
+            clearInterval(intervalID);
+            intervalID = setInterval(decrement, 1000);
+        }
+
+        function decrement() {
+            time--;
+
+            // $("#timer").html(number);
+            // console.log(number);
+
+            let converted = timeConverter(time); 
+            $("#timer").html(converted);
+
+            if (time === 0) {
+                stopTimer();
+                // showResults(); 
+            }
+        }
+
+        function timeConverter(t) {
+
+              let minutes = Math.floor(t / 60);
+              let seconds = t - (minutes * 60);
+            
+              if (seconds < 10) {
+                seconds = "0" + seconds;
+              }
+            
+              if (minutes === 0) {
+                minutes = "0";
+              }
+              else if (minutes < 10) {
+                minutes = "" + minutes;
+              }
+            
+              return minutes + ":" + seconds;
+            }
+            
+    }
+
+    function stopTimer() {
+        clearInterval(intervalID);
+    }
 
     $("#start").on("click", function () {
         // console.log("start is clicked");
@@ -99,45 +150,18 @@ $(document).ready(function () {
             let questionTemplate = `
             <div class="questionContainer">
                 <p>${q}</p>
-                <input type="radio" value="${a}" name="question${index + 1}">${a}</input>
-                <input type="radio" value="${b}" name="question${index + 1}">${b}</input>
-                <input type="radio" value="${c}" name="question${index + 1}">${c}</input>
-                <input type="radio" value="${d}" name="question${index + 1}">${d}</input>
+                <input type="radio" value="${a}" name="question${index + 1}">${a}</input><br>
+                <input type="radio" value="${b}" name="question${index + 1}">${b}</input><br>
+                <input type="radio" value="${c}" name="question${index + 1}">${c}</input><br>
+                <input type="radio" value="${d}" name="question${index + 1}">${d}</input><br>
+                <br>
             </div>
             `
             $("#quiz").append(questionTemplate);
-            // console.log($(":checked")[2].value); 
         }
 
-        setTimer(); 
+        setTimer();
 
-        function setTimer() {
-            let number = 10
-            let intervalID; 
-
-            run();
-
-            function run() {
-                clearInterval(intervalID);
-                intervalID = setInterval(decrement, 1000); 
-            }
-
-            function decrement() {
-                number--; 
-
-                $("#timer").html(number); 
-                console.log(number);
-
-                if (number === 0) {
-                    stopTimer(); 
-                    // showResults(); 
-                }
-            }
-        }
-
-        function stopTimer() {
-            clearInterval(intervalID); 
-        }
     });
 
     $("#submit").on("click", function () {
@@ -145,43 +169,42 @@ $(document).ready(function () {
 
         myQuestions.forEach(hideQuestions);
 
-        function hideQuestions () {
+        stopTimer();
+
+        function hideQuestions() {
             $(".questionContainer").hide();
         }
 
-        showResults(); 
+        showResults();
 
-        function showResults() { 
+        function showResults() {
             let answersCorrect = 0;
             let answersIncorrect = 0;
+            let answersUnanswered = 0; 
 
-            // $("input:radio:checked").each(function()) {
-            //     let x = value;
-            //     console.log(x);
-            // };
 
-            let selectedOption = $("input:checked").val();
-            console.log(selectedOption);
+            // let selectedOption = $("input:checked").val();
+            // console.log(selectedOption);
 
+            //This is catching the checked answers, but only the first one that is checked. 
+            //It then console log's that option 8 times. 
+            for (i = 0; i < myQuestions.length; i++) {
+                if (":checked") {
+                    let selectedOption = $("input:checked").val();
+                    console.log($(":checked")[0].value); 
+                    console.log($(":checked")[1].value); 
+                    console.log($(":checked")[2].value); 
+                }
+            }
+            //Capture checked answers
+                //Then compare them with the correct answers
+                //if they match, correct answers go up by 1
+                //if they don't match, incorrect answers go up by 1
+                //if it was not checked, then unanswered goes up by 1 
+            
         }
     });
 
     function restart() { }
 
 });
-
-
-//Click Start to load questions 
-
-//Set a certain amount of time for the form (20 seconds per question)
-//Display countdown timer
-//Pick a multiple choice question; only allow for one to be selected
-    //Compare answer with correct answer
-
-//When the timer runs out OR the answers are submitted:
-    //List Correct Answers
-    //List Incorrect Answers
-    //List Unanswered
-    //Restart Game Button 
-        //Use the same function you use for the start button 
-
