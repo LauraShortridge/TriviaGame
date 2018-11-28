@@ -7,7 +7,7 @@ let myQuestions = [
             c: "Laura",
             d: "Dial M for Murder"
         },
-        correctAnswer: "Laura"
+        correctAnswer: "c"
     },
     {
         question: "Which co-star of Humphrey Bogart’s did he marry in 1945?",
@@ -17,7 +17,7 @@ let myQuestions = [
             c: "Ingrid Bergman",
             d: "Lauren Bacall"
         },
-        correctAnswer: "Lauren Bacall"
+        correctAnswer: "d"
     },
     {
         question: "Who was Scarlett O’Hara’s second husband?",
@@ -27,7 +27,7 @@ let myQuestions = [
             c: "Ashley Wilkes",
             d: "Charles Hamilton"
         },
-        correctAnswer: "Frank Kennedy"
+        correctAnswer: "a"
     },
     {
         question: "On what national memorial did Cary Grant end up on in “North by Northwest”?",
@@ -37,7 +37,7 @@ let myQuestions = [
             c: "Grant’s Tomb",
             d: "Lincoln Memorial"
         },
-        correctAnswer: "Mount Rushmore"
+        correctAnswer: "b"
     },
     {
         question: "What actress did Fred Astaire dance through 10 films with?",
@@ -47,7 +47,7 @@ let myQuestions = [
             c: "Cyd Charisse",
             d: "Leslie Caron"
         },
-        correctAnswer: "Ginger Rogers"
+        correctAnswer: "a"
     },
     {
         question: "What was Cary Grant’s real name?",
@@ -57,7 +57,7 @@ let myQuestions = [
             c: "James Grant",
             d: "Archibald Leach"
         },
-        correctAnswer: "Archibald Leach"
+        correctAnswer: "d"
     },
     {
         question: "What was the last word uttered by Charles Foster Kane in “Citizen Kane”?",
@@ -67,7 +67,7 @@ let myQuestions = [
             c: "Puzzle",
             d: "Snowglobe "
         },
-        correctAnswer: "Rosebud"
+        correctAnswer: "b"
     },
     {
         question: "Who sang On the Good Ship Lollipop in “Bright Eyes”?",
@@ -77,8 +77,19 @@ let myQuestions = [
             c: "Judy Garland",
             d: "George McFarland"
         },
-        correctAnswer: "Shirley Temple"
+        correctAnswer: "a"
     }
+]
+
+let correctAnswers = [
+    "c",
+    "d",
+    "a",
+    "b",
+    "a",
+    "d",
+    "b",
+    "a"
 ]
 
 $(document).ready(function () {
@@ -150,10 +161,10 @@ $(document).ready(function () {
             let questionTemplate = `
             <div class="questionContainer">
                 <p>${q}</p>
-                <input type="radio" value="${a}" name="question${index + 1}">${a}</input><br>
-                <input type="radio" value="${b}" name="question${index + 1}">${b}</input><br>
-                <input type="radio" value="${c}" name="question${index + 1}">${c}</input><br>
-                <input type="radio" value="${d}" name="question${index + 1}">${d}</input><br>
+                <input type="radio" value="a" name="question${index + 1}">${a}</input><br>
+                <input type="radio" value="b" name="question${index + 1}">${b}</input><br>
+                <input type="radio" value="c" name="question${index + 1}">${c}</input><br>
+                <input type="radio" value="d" name="question${index + 1}">${d}</input><br>
                 <br>
             </div>
             `
@@ -188,12 +199,30 @@ $(document).ready(function () {
 
             //This is catching the checked answers, but only the first one that is checked. 
             //It then console log's that option 8 times. 
+
+            //Put the correct answers in an array; 
+            //Compare them in the same order; 
             for (i = 0; i < myQuestions.length; i++) {
-                if (":checked") {
-                    let selectedOption = $("input:checked").val();
-                    console.log($(":checked")[0].value); 
-                    console.log($(":checked")[1].value); 
-                    console.log($(":checked")[2].value); 
+                // if (":checked") {
+
+                //     // let selectedOption = $("input:checked").val();
+                //     let selectedOption = ($(":checked")[i].value);
+                //     console.log(selectedOption); 
+                //     // console.log($(":checked")[i].value); 
+                //     //console.log($(":checked")[1].value); 
+                //     //console.log($(":checked")[2].value); 
+                // }
+                if ($(":checked") {
+                    // tally up the amount of checked 
+                    // subtract total tally from 8
+                    // set remainder to a variable equal to unanswered
+                }
+                if ($(":checked")[i].value === correctAnswers[i]) {
+                    console.log("that's right!");
+                } else {
+                        console.log("that's wrong!");
+                    }
+
                 }
             }
             //Capture checked answers
@@ -203,8 +232,7 @@ $(document).ready(function () {
                 //if it was not checked, then unanswered goes up by 1 
             
         }
-    });
+)});
 
     function restart() { }
 
-});
