@@ -98,6 +98,9 @@ $(document).ready(function () {
     let time = 120
     let intervalID;
 
+    $("#submit").hide(); 
+    $("#reset").hide(); 
+
     function setTimer() {
 
         run();
@@ -110,15 +113,12 @@ $(document).ready(function () {
         function decrement() {
             time--;
 
-            // $("#timer").html(number);
-            // console.log(number);
-
             let converted = timeConverter(time); 
             $("#timer").html(converted);
 
             if (time === 0) {
                 stopTimer();
-                // showResults(); 
+                $("#submit").click(); 
             }
         }
 
@@ -147,9 +147,11 @@ $(document).ready(function () {
         clearInterval(intervalID);
     }
 
+
     $("#start").on("click", function () {
         // console.log("start is clicked");
         $("#start").hide();
+        $("#submit").show(); 
         // console.log(myQuestions[0].question);
 
         myQuestions.forEach(showQuestions);
@@ -177,7 +179,7 @@ $(document).ready(function () {
 
     });
 
-    $("#submit").on("click", function () {
+    $("#submit").on("click", function sumbit() {
         let answersCorrect = 0;
         let answersIncorrect = 0;
         let answersUnanswered = 0; 
@@ -192,167 +194,76 @@ $(document).ready(function () {
             $(".questionContainer").hide();
         }
 
-        showResults();
+       checkResults();
 
-        function showResults() {
+        function checkResults() {
 
-            for (i = 0; i < myQuestions.length; i++) { // Looping through your questions
+            for (i = 0; i < myQuestions.length; i++) { 
 
-               let questionAns = $( "input[name=question" + ( i + 1 ) + "]" ); // Setting the current question to variable questionAns
+               let questionAns = $( "input[name=question" + ( i + 1 ) + "]" ); 
 
-               if ( $( questionAns ).is( ":checked" ) ) { // Checking if the question was answered
-
-                  for ( j = 0; j < 4; j++ ) { // Looping through the answers
-
-                     if ( $( questionAns[ j ] ).is( ":checked" ) ) { // Checking if an answer was checked
-
-                        console.log( "Answer: ", questionAns[j] ); // Console logging which answer was chosen. This can be commented out
-
-                        answeredQuestions.push( $( "questionAns[ j ]" ).val() ); // Pushing the value of the chosen answer into the answeredQuestions array
+               if ( $( questionAns ).is( ":checked" ) ) {
+                  for ( j = 0; j < 4; j++ ) { 
+                     if ( $( questionAns[ j ] ).is( ":checked" ) ) { 
+                        console.log( "Answer: ", questionAns[j] ); 
+                        answeredQuestions.push( $( questionAns[ j ] ).val() ); 
                      }
                   }
                } else {
-                  answeredQuestions.push( 0 ); // If an question was not answered push 0 to the answeredQuestions array
+                  answeredQuestions.push( 0 ); 
                }
 
-               console.log("ARRAY: ", answeredQuestions) // Console logging answeredQuestions array after every question. This can be commented Out
+               console.log("ARRAY: ", answeredQuestions) 
             }
         }
-
-        // function showResults() {
-
-        //     //Loops through all of myQuestions
-
-        //     for (i = 0; i < myQuestions.length; i++) {
-
-        //         //This is assigning a value to each set of questions
-
-        //         let questionAns = $("input[name=question" + (i + 1) + "]");
-
-        //         if ($(questionAns).is(":checked")) {
-
-        //             for (j = 0; j < 4; j++) {
-
-        //                 // let questionAnsValue = $("input[value]");
-
-        //                 // console.log(questionAnsValue)
-                        
-        //                 if ($(questionAns).is(":checked")) {
-
-        //                     console.log(questionAns[j]);
-
-        //                     answeredQuestions.push($(questionAns[j]).val()); 
-
-        //                 } else {
-
-        //                     console.log("I am not checked");
-
-        //                     answeredQuestions.push(0);
-        //                 }
-        //             }
-        //         console.log("ARRAY: ", answeredQuestions);
-        //         }
-        //     }
-        // }
 
         compareAnswers();
 
         function compareAnswers () {
-            // let correctValue = correctAnswers[i];
-            // let answeredValue = answeredQuestions[i];
-
-            // console.log(correctValue, "correctValue", answeredValue, "answeredValue");
-
-            // for (i = 0; i < correctAnswers.length; i++) {
-
-            //     if (correctAnswers[i] === answeredQuestions[i]) {
-            //         console.log("that's right!");
-            //     } else {
-            //         console.log("that's wrong!");
-            //     }
-
-            //     let correctValue = correctAnswers[i];
-            //     let answeredValue = answeredQuestions[i];
-            //     console.log(correctValue, "correctValue", answeredValue, "answeredValue");
-            // }
 
             for ( i = 0; i < correctAnswers.length; i ++ ) {
 
                 if ( answeredQuestions[i] === 0 ) {
                 //    console.log( "This question was not answered" );
-                   // The following is if you have an unansweredQuestions variable
                    answersUnanswered ++;
                 } else if ( correctAnswers[i] === answeredQuestions[i] ) {
                 //    console.log( "This is the correct answer" );
-                   // The following is if you have an answeredCorrect variable
                    answersCorrect++; 
                 } else {
                 //    console.log( "This is the wrong answer" );
-                   // The following is if you have an answeredWrong variable
                    answersIncorrect++; 
                 }
                 console.log(answersUnanswered, "Unanswered", answersCorrect, "Correct", answersIncorrect, "Incorrect");
              }
         }
 
+        showResults();
+
+        function showResults () {
+
+            $("#submit").hide();
+            $("#reset").show(); 
+
+            let a = answersCorrect;
+            let f = answersIncorrect; 
+            let u = answersUnanswered;
+            let results = `
+            <div class="resultsContainer">
+                <p>Correct Answers: ${a}</p>
+                <p>Incorrect Answers: ${f}</p>
+                <p>Unanswered: ${u}</p>
+             </div>
+            `
+            $("#results").append(results);
+        }
+
 
     });
-            // compareAnswers();
-
-            // function compareAnswers () {
-            //     if (correctAnswers[i] === answeredQuestions[i]) {
-            //         console.log("that's right!");
-            //     } else {
-            //         console.log("that's wrong!");
-            //     }
-
-            // }
-            //Capture checked answers
-                //Then compare them with the correct answers
-                //if they match, correct answers go up by 1
-                //if they don't match, incorrect answers go up by 1
-                //if it was not checked, then unanswered goes up by 1 
             
-        
+    
 
-
-    function restart() { }
-
+    $("#reset").on("click", function () {
+        location.reload(); 
     });
 
-            // let selectedOption = $("input:checked").val();
-            // console.log(selectedOption); 
-
-                // if (":checked") {
-
-                //     // let selectedOption = $("input:checked").val();
-                //     let selectedOption = ($(":checked")[i].value);
-                //     console.log(selectedOption); 
-                //     // console.log($(":checked")[i].value); 
-                //     //console.log($(":checked")[1].value); 
-                //     //console.log($(":checked")[2].value); 
-                // }
-                // function showResults() {
-
-                //     for (i = 0; i < myQuestions.length; i++) { // Looping through your questions
-        
-                //        let questionAns = $( "input[name=question" + ( i + 1 ) + "]" ); // Setting the current question to variable questionAns
-        
-                //        if ( $( questionAns ).is( ":checked" ) ) { // Checking if the question was answered
-        
-                //           for ( j = 0; j < 4; j++ ) { // Looping through the answers
-        
-                //              if ( $( questionAns[ j ] ).is( ":checked" ) ) { // Checking if an answer was checked
-        
-                //                 console.log( questionAns[ j ] ); // Console logging which answer was chosen. This can be commented out
-        
-                //                 answeredQuestions.push( $( "questionAns[ j ]" ).val() ); // Pushing the value of the chosen answer into the answeredQuestions array
-                //              }
-                //           }
-                //        } else {
-                //           answeredQuestions.push( 0 ); // If an question was not answered push 0 to the answeredQuestions array
-                //        }
-        
-                //        console.log("ARRAY: ", answeredQuestions) // Console logging answeredQuestions array after every question. This can be commented Out
-                //     }
-                // }
+});
