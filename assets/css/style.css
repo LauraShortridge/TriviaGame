@@ -10,3 +10,7 @@
 #cardbackground {
     opacity: .9; 
 }
+
+input[type="radio"] {
+    margin-right: 6px;
+  }

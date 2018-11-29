@@ -197,16 +197,20 @@ $(document).ready(function () {
         function showResults() {
 
             for (i = 0; i < myQuestions.length; i++) {
+                let questionAns = $("input[name=question" + (i + 1) + "]");
 
-                if ($("input[name=question" + (i + 1) + "]").is(":checked")) {
-                    console.log("I am checked");
-                    answeredQuestions.push(($(":checked")[i].value)); 
-                } else {
-                    console.log("I am not checked")
-                    answeredQuestions.push(0);
-                }
-
+                if ($(questionAns).is(":checked")) {
+                    for (j = 0; j < 4; j++) {
+                        if ($(questionsAns[j]).is(":checked")) {
+                        console.log(questions[j]);
+                        answeredQuestions.push($("questionAns[j]").val()); 
+                        } else {
+                        console.log("I am not checked")
+                        answeredQuestions.push(0);
+                        }
+                    }
                 console.log("ARRAY: ", answeredQuestions)
+                }
             }
         }
 
@@ -218,19 +222,35 @@ $(document).ready(function () {
 
             // console.log(correctValue, "correctValue", answeredValue, "answeredValue");
 
-            for (i = 0; i < correctAnswers.length; i++) {
+            // for (i = 0; i < correctAnswers.length; i++) {
 
-                if (correctAnswers[i] === answeredQuestions[i]) {
-                    console.log("that's right!");
+            //     if (correctAnswers[i] === answeredQuestions[i]) {
+            //         console.log("that's right!");
+            //     } else {
+            //         console.log("that's wrong!");
+            //     }
+
+            //     let correctValue = correctAnswers[i];
+            //     let answeredValue = answeredQuestions[i];
+            //     console.log(correctValue, "correctValue", answeredValue, "answeredValue");
+            // }
+
+            for ( i = 0; i < correctAnswers.length; i ++ ) {
+
+                if ( answeredQuestions[i] === 0 ) {
+                   console.log( "This question was not answered" );
+                   // The following is if you have an unansweredQuestions variable
+                   // unansweredQuestions ++;
+                } else if ( correctAnswers[i] === answeredQuestions[i] ) {
+                   console.log( "This is the correct answer" );
+                   // The following is if you have an answeredCorrect variable
+                   // answeredCorrect ++
                 } else {
-                    console.log("that's wrong!");
+                   console.log( "This is the wrong answer" );
+                   // The following is if you have an answeredWrong variable
+                   // answeredWrong ++
                 }
-
-                let correctValue = correctAnswers[i];
-                let answeredValue = answeredQuestions[i];
-                console.log(correctValue, "correctValue", answeredValue, "answeredValue");
-            }
-
+             }
         }
 
 
