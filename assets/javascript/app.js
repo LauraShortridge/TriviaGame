@@ -192,16 +192,14 @@ $(document).ready(function () {
             let answersCorrect = 0;
             let answersIncorrect = 0;
             let answersUnanswered = 0; 
-
+            let answeredQuestions = []; 
 
             // let selectedOption = $("input:checked").val();
-            // console.log(selectedOption);
-
-            //This is catching the checked answers, but only the first one that is checked. 
-            //It then console log's that option 8 times. 
+            // console.log(selectedOption); 
 
             //Put the correct answers in an array; 
             //Compare them in the same order; 
+
             for (i = 0; i < myQuestions.length; i++) {
                 // if (":checked") {
 
@@ -212,27 +210,36 @@ $(document).ready(function () {
                 //     //console.log($(":checked")[1].value); 
                 //     //console.log($(":checked")[2].value); 
                 // }
-                if ($(":checked") {
+                // if ($(":checked")) {
                     // tally up the amount of checked 
                     // subtract total tally from 8
                     // set remainder to a variable equal to unanswered
                 }
-                if ($(":checked")[i].value === correctAnswers[i]) {
-                    console.log("that's right!");
+                // if ($(":checked")[i].value === correctAnswers[i]) {
+                //     console.log("that's right!");
+                // } else {
+                //         console.log("that's wrong!");
+                //     }
+                
+                if ($("input[name=question" + (i + 1) + "]").is(":checked")) {
+                    console.log("I am checked");
+                    answeredQuestions.push($("input[name=question" + (i + 1) + "]").val())
                 } else {
-                        console.log("that's wrong!");
-                    }
-
+                    console.log("I am not checked")
+                    answeredQuestions.push(0);
+                }
+                console.log("ARRAY: ", answeredQuestions)
                 }
             }
+    )});
             //Capture checked answers
                 //Then compare them with the correct answers
                 //if they match, correct answers go up by 1
                 //if they don't match, incorrect answers go up by 1
                 //if it was not checked, then unanswered goes up by 1 
             
-        }
-)});
+        
+
 
     function restart() { }
 
