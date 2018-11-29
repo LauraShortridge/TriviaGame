@@ -92,6 +92,8 @@ let correctAnswers = [
     "a"
 ]
 
+let answeredQuestions = []; 
+
 $(document).ready(function () {
     let time = 120
     let intervalID;
@@ -176,6 +178,10 @@ $(document).ready(function () {
     });
 
     $("#submit").on("click", function () {
+        let answersCorrect = 0;
+        let answersIncorrect = 0;
+        let answersUnanswered = 0; 
+
         console.log("submit clicked");
 
         myQuestions.forEach(hideQuestions);
@@ -189,18 +195,74 @@ $(document).ready(function () {
         showResults();
 
         function showResults() {
-            let answersCorrect = 0;
-            let answersIncorrect = 0;
-            let answersUnanswered = 0; 
-            let answeredQuestions = []; 
+
+            for (i = 0; i < myQuestions.length; i++) {
+
+                if ($("input[name=question" + (i + 1) + "]").is(":checked")) {
+                    console.log("I am checked");
+                    answeredQuestions.push(($(":checked")[i].value)); 
+                } else {
+                    console.log("I am not checked")
+                    answeredQuestions.push(0);
+                }
+
+                console.log("ARRAY: ", answeredQuestions)
+            }
+        }
+
+        compareAnswers();
+
+        function compareAnswers () {
+            // let correctValue = correctAnswers[i];
+            // let answeredValue = answeredQuestions[i];
+
+            // console.log(correctValue, "correctValue", answeredValue, "answeredValue");
+
+            for (i = 0; i < correctAnswers.length; i++) {
+
+                if (correctAnswers[i] === answeredQuestions[i]) {
+                    console.log("that's right!");
+                } else {
+                    console.log("that's wrong!");
+                }
+
+                let correctValue = correctAnswers[i];
+                let answeredValue = answeredQuestions[i];
+                console.log(correctValue, "correctValue", answeredValue, "answeredValue");
+            }
+
+        }
+
+
+    });
+            // compareAnswers();
+
+            // function compareAnswers () {
+            //     if (correctAnswers[i] === answeredQuestions[i]) {
+            //         console.log("that's right!");
+            //     } else {
+            //         console.log("that's wrong!");
+            //     }
+
+            // }
+            //Capture checked answers
+                //Then compare them with the correct answers
+                //if they match, correct answers go up by 1
+                //if they don't match, incorrect answers go up by 1
+                //if it was not checked, then unanswered goes up by 1 
+            
+        
+
+
+    function restart() { }
+
+    });
 
             // let selectedOption = $("input:checked").val();
             // console.log(selectedOption); 
 
             //Put the correct answers in an array; 
             //Compare them in the same order; 
-
-            for (i = 0; i < myQuestions.length; i++) {
                 // if (":checked") {
 
                 //     // let selectedOption = $("input:checked").val();
@@ -214,32 +276,18 @@ $(document).ready(function () {
                     // tally up the amount of checked 
                     // subtract total tally from 8
                     // set remainder to a variable equal to unanswered
-                }
+                // }
                 // if ($(":checked")[i].value === correctAnswers[i]) {
                 //     console.log("that's right!");
                 // } else {
                 //         console.log("that's wrong!");
                 //     }
-                
-                if ($("input[name=question" + (i + 1) + "]").is(":checked")) {
-                    console.log("I am checked");
-                    answeredQuestions.push($("input[name=question" + (i + 1) + "]").val())
-                } else {
-                    console.log("I am not checked")
-                    answeredQuestions.push(0);
-                }
-                console.log("ARRAY: ", answeredQuestions)
-                }
-            }
-    )});
-            //Capture checked answers
-                //Then compare them with the correct answers
-                //if they match, correct answers go up by 1
-                //if they don't match, incorrect answers go up by 1
-                //if it was not checked, then unanswered goes up by 1 
-            
-        
 
-
-    function restart() { }
-
+                // function compareAnswers () {
+                //     if (correctAnswers[i] === answeredQuestions[i]) {
+                //         console.log("that's right!");
+                //     } else {
+                //         console.log("that's wrong!");
+                //     }
+    
+                // }
