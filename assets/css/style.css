@@ -1,7 +1,5 @@
 #classicbackground {
     background-image: url("../images/classicmovies.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
     height: auto; 
     min-height: 720px; 
     margin: 0; 
